@@ -1,6 +1,7 @@
 from pages.profile_page import PersonalAccountPage
 from pages.main_page import StartPage
-from data import Urls, Buttons
+from data import Buttons
+from urls import Urls
 import allure
 
 @allure.suite('Проверки основного функционала')
@@ -13,7 +14,7 @@ class TestMainFunctionality:
         start_page.click_order_feed_button()
         personal_account_page.wait_for_personal_account_button()
         start_page.click_constructor_button()
-        assert start_page.find_create_order().is_displayed
+        assert start_page.find_create_order().is_displayed()
 
     @allure.title('Переход в ленту заказов с главной страницы')
     def test_transition_order_feed(self, driver):
@@ -32,7 +33,7 @@ class TestMainFunctionality:
         start_page = StartPage(driver)
         start_page.click_ingredient_button()
         start_page.close_ingredient_details()
-        assert start_page.find_create_order().is_displayed
+        assert start_page.find_create_order().is_displayed()
 
     @allure.title('Изменение счетчика при добавлении ингредиента')
     def test_add_ingredient_in_order(self, driver):
@@ -49,5 +50,4 @@ class TestMainFunctionality:
         start_page.add_ingredient()
         start_page.click_confirm_order()
         assert start_page.order_is_creating().text == Buttons.ORDER_IN_PROGRESS
-
 

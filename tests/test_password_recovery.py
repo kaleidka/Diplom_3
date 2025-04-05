@@ -1,5 +1,6 @@
+from data import TestData
 from pages.password_recovery_page import RecoveryPasswordPage
-from data import Urls
+from urls import Urls
 import allure
 from pages.main_page import StartPage
 
@@ -21,7 +22,7 @@ class TestPasswordRecovery:
         start_page = StartPage(driver)
         start_page.click_enter_personal_account()
         recovery_password_page.click_recovery_button()
-        recovery_password_page.set_text_email_field()
+        recovery_password_page.set_text_email_field(TestData.USER_EMAIL)
         recovery_password_page.click_button_recovery()
         recovery_password_page.wait_for_save_button()
         assert recovery_password_page.get_current_url() == f"{Urls.MAIN}{Urls.PASSWORD_RESET}"
@@ -32,7 +33,7 @@ class TestPasswordRecovery:
         start_page = StartPage(driver)
         start_page.click_enter_personal_account()
         recovery_password_page.click_recovery_button()
-        recovery_password_page.set_text_email_field()
+        recovery_password_page.set_text_email_field(TestData.USER_EMAIL)
         recovery_password_page.click_button_recovery()
         recovery_password_page.wait_for_save_button()
         recovery_password_page.set_password()

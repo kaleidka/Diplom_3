@@ -9,8 +9,8 @@ class RecoveryPasswordPage(BasePage):
         self.click_element_with_wait(RecoveryPasswordLocators.RECOVER_PASSWORD_LINK)
 
     @allure.step('Ввод email для восстановления')
-    def set_text_email_field(self):
-        self.set_text(RecoveryPasswordLocators.EMAIL_INPUT, TestData.USER_EMAIL)
+    def set_text_email_field(self, email):
+        self.set_text(RecoveryPasswordLocators.EMAIL_INPUT, email)
 
     @allure.step('Подтверждение восстановления')
     def click_button_recovery(self):

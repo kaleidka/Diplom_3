@@ -4,6 +4,7 @@ from pages.main_page import StartPage
 from data import Buttons
 import allure
 
+
 @allure.suite('Проверки ленты заказов')
 class TestFeedFunctionality:
 
@@ -16,11 +17,10 @@ class TestFeedFunctionality:
         assert order_feed_page.find_compound_text().text == Buttons.ORDER_COMPOSITION
 
     @allure.title('Проверка отображения заказа пользователя в общей ленте')
-    def test_user_order_in_feed(self, driver):
+    def test_user_order_in_feed(self, driver, authorized_user):
         order_feed_page = OrderFeedPage(driver)
         personal_account_page = PersonalAccountPage(driver)
         start_page = StartPage(driver)
-        personal_account_page.log_in()
         start_page.wait_make_order()
         start_page.make_order()
         personal_account_page.click_personal_account()
@@ -30,11 +30,9 @@ class TestFeedFunctionality:
         assert order_number in order_feed_page.get_order_numbers()
 
     @allure.title('Проверка увеличения счетчика "Всего заказов"')
-    def test_total_orders_counter_increase(self, driver):
+    def test_total_orders_counter_increase(self, driver, authorized_user):
         order_feed_page = OrderFeedPage(driver)
-        personal_account_page = PersonalAccountPage(driver)
         start_page = StartPage(driver)
-        personal_account_page.log_in()
         start_page.wait_make_order()
         start_page.click_history_button()
         counter_order = order_feed_page.get_all_time_numbers_of_orders()
@@ -45,11 +43,9 @@ class TestFeedFunctionality:
         assert new_counter_order > counter_order
 
     @allure.title('Проверка увеличения счетчика "Заказов за сегодня"')
-    def test_today_orders_counter_increase(self, driver):
+    def test_today_orders_counter_increase(self, driver, authorized_user):
         order_feed_page = OrderFeedPage(driver)
-        personal_account_page = PersonalAccountPage(driver)
         start_page = StartPage(driver)
-        personal_account_page.log_in()
         start_page.wait_make_order()
         start_page.click_history_button()
         counter_order = order_feed_page.get_today_numbers_of_orders()
@@ -60,11 +56,9 @@ class TestFeedFunctionality:
         assert new_counter_order > counter_order
 
     @allure.title('Проверка отображения заказа в разделе "В работе"')
-    def test_order_in_progress_section(self, driver):
+    def test_order_in_progress_section(self, driver, authorized_user):
         order_feed_page = OrderFeedPage(driver)
-        personal_account_page = PersonalAccountPage(driver)
         start_page = StartPage(driver)
-        personal_account_page.log_in()
         start_page.wait_make_order()
         start_page.add_ingredient()
         start_page.click_confirm_order()
@@ -73,4 +67,3 @@ class TestFeedFunctionality:
         start_page.click_history_button_with_wait()
         order_number_in_work = order_feed_page.get_order_numer_in_work_with_template()
         assert f"0{order_number}" == order_number_in_work
-

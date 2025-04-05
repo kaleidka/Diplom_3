@@ -1,6 +1,8 @@
 import pytest
 from selenium import webdriver
-from data import Urls
+from urls import Urls
+from pages.main_page import StartPage
+from pages.profile_page import PersonalAccountPage
 
 
 @pytest.fixture(params=['chrome', 'firefox'])
@@ -14,3 +16,11 @@ def driver(request):
         driver.get(Urls.MAIN)
     yield driver
     driver.quit()
+
+@pytest.fixture
+def authorized_user(driver):
+    personal_account_page = PersonalAccountPage(driver)
+    start_page = StartPage(driver)
+    personal_account_page.log_in()
+    start_page.wait_make_order()
+    yield driver
